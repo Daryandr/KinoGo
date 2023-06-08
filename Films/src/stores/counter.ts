@@ -1,5 +1,6 @@
 import { ref, computed } from 'vue'
 import { defineStore } from 'pinia'
+import {Film} from '@/types/main'
 
 export const useCounterStore = defineStore('counter', () => {
   const count = ref(0)
