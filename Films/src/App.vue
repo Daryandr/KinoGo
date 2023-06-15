@@ -2,6 +2,8 @@
 import { RouterLink, RouterView } from 'vue-router'
 import MainPage from './components/MainPage.vue'
 import {defineComponent} from 'vue'
+import "bootstrap/dist/css/bootstrap.min.css"
+import "bootstrap"
 
 export default defineComponent({
   name: 'App',
@@ -21,6 +23,6 @@ export default defineComponent({
   <RouterView />
 </template>
 
-<style lang="sass" scoped>
+<style lang="sass">
 
 </style>
