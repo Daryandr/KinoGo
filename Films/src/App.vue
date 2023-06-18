@@ -1,28 +1,32 @@
 <script lang="ts">
-import { RouterLink, RouterView } from 'vue-router'
-import MainPage from './components/MainPage.vue'
-import {defineComponent} from 'vue'
-import "bootstrap/dist/css/bootstrap.min.css"
-import "bootstrap"
+import { RouterLink, RouterView } from "vue-router";
+import MainPage from "./components/MainPage.vue";
+import HeaderNav from "@/components/HeaderNav.vue";
+import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: 'App',
+  name: "App",
   components: {
     MainPage,
+    HeaderNav,
     RouterLink,
-    RouterView,
+    RouterView
   }
-})
+});
 </script>
 
 <template>
-  <header>
-<!--        <RouterLink to="/">Home</RouterLink>-->
-  </header>
-  <MainPage />
+  <div class="cont bg-dark">
+    <HeaderNav />
+    <MainPage />
+  </div>
   <RouterView />
 </template>
 
-<style lang="sass">
+<style lang="scss" scoped>
+
+.cont {
+  height: 100vh;
+}
 
 </style>
