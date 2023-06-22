@@ -20,7 +20,6 @@ export type Film = {
   },
   watchability:[
     {
-      _id: string,
       logo: string,
       name: string,
       url: string

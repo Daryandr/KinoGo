@@ -8,9 +8,12 @@ export default defineComponent({
 
 <template>
   <header>
-    <nav class="navbar navbar-expand-lg navbar-dark">
+    <nav class="navbar navbar-expand-lg navbar-dark px-5">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">KinoGo</a>
+        <a class="navbar-brand" href="#">
+          <i class="bi bi-film" />
+          KinoGo
+        </a>
       </div>
     </nav>
   </header>
@@ -25,7 +28,7 @@ export default defineComponent({
 
 .navbar-brand {
   font-family: 'Candal', sans-serif;
-  font-size: 1.6em;
+  font-size: 2em;
 }
 
 .navbar {

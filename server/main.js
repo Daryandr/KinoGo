@@ -52,7 +52,6 @@ app.get("/list", async (req, res) => {
       },
       watchability: {
         items: {
-          _id: 1,
           logo: {
             url: 1
           },
@@ -113,7 +112,6 @@ app.get("/list/:id", async (req, res) => {
           },
           watchability: {
             items: {
-              _id: 1,
               logo: {
                 url: 1
               },

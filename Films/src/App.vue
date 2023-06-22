@@ -16,17 +16,18 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="cont bg-dark">
+  <div class="bg-dark min-vh-100 d-flex flex-column">
     <HeaderNav />
     <MainPage />
+    <footer class="container-fluid mt-auto" />
   </div>
   <RouterView />
 </template>
 
 <style lang="scss" scoped>
-
-.cont {
-  height: 100vh;
+.container-fluid {
+  height: 10vh;
+  z-index: 1;
+  background: linear-gradient(0deg, $primary 0%, transparent 100%);
 }
-
 </style>
