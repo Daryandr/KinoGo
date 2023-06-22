@@ -1,0 +1,50 @@
+<script lang="ts">
+import { defineComponent } from "vue";
+
+export default defineComponent({
+  name: "SortDropdown",
+  data() {
+    return {
+      sortValue: "По названию",
+      sortOptions: ["По названию", "По рейтингу", "По году", "По хронометражу"]
+    };
+  },
+  methods: {
+    setSort(option) {
+      this.sortValue = option;
+      this.$emit("sort", option);
+    }
+  }
+});
+</script>
+
+<template>
+  <div class="dropdown m-2">
+    <button
+      class="btn btn-primary btn-lg dropdown-toggle px-3 py-2"
+      type="button"
+      id="dropdownBtn"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      {{ sortValue }}
+    </button>
+    <ul
+      class="dropdown-menu dropdown-menu-dark bg-primary p-0"
+      aria-labelledby="dropdownBtn"
+    >
+      <li
+        v-for="option in sortOptions"
+        :key="option"
+      >
+        <button
+          class="dropdown-item btn btn-primary btn-lg text-white px-3 py-2"
+          type="button"
+          @click="setSort(option)"
+        >
+          {{ option }}
+        </button>
+      </li>
+    </ul>
+  </div>
+</template>
