@@ -1,8 +1,10 @@
 <script lang="ts">
 import { defineComponent } from "vue";
+import { RouterLink } from "vue-router";
 
 export default defineComponent({
-  name: "HeaderNav"
+  name: "HeaderNav",
+  components: { RouterLink }
 });
 </script>
 
@@ -10,10 +12,10 @@ export default defineComponent({
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark px-5">
       <div class="container-fluid">
-        <a class="navbar-brand" href="#">
+        <RouterLink class="navbar-brand" to="/">
           <i class="bi bi-film" />
           KinoGo
-        </a>
+        </RouterLink>
       </div>
     </nav>
   </header>

@@ -1,10 +1,11 @@
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, PropType } from "vue";
 import type { Film } from "@/types/main";
-import type { PropType } from "vue";
+import { RouterLink } from "vue-router";
 
 export default defineComponent({
   name: "FilmCard",
+  components: { RouterLink },
   props: {
     film: {
       type: Object as PropType<Film>,
@@ -25,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <div class="card text-white m-3 bg-dark">
+  <RouterLink class="card text-white m-3 bg-dark" :to="'film/'+film._id">
     <img
       class="card-img-top"
       :src="film.poster"
@@ -51,7 +52,7 @@ export default defineComponent({
         {{ film.shortDescription }}
       </div>
     </div>
-  </div>
+  </RouterLink>
 </template>
 
 <style scoped lang="scss">

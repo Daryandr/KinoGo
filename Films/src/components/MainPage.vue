@@ -49,8 +49,20 @@ export default defineComponent({
     <SearchBar @search="setSearch" />
     <SortDropdown @sort="setSort" />
     <div
+      v-if="sortedFilms.length==0"
       class="d-flex justify-content-center"
-      v-if="filteredFilms.length==0"
+    >
+      <div
+        style="width: 3rem; height: 3rem;"
+        class="spinner-border text-white m-5"
+        role="status"
+      >
+        <span class="visually-hidden">Загрузка...</span>
+      </div>
+    </div>
+    <div
+      class="d-flex justify-content-center"
+      v-else-if="filteredFilms.length==0"
     >
       <h3 class="text-white">
         По вашему запросу ничего не найдено

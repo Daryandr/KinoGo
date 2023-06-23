@@ -1,15 +1,12 @@
 <script lang="ts">
-import { RouterLink, RouterView } from "vue-router";
-import MainPage from "./components/MainPage.vue";
+import { RouterView } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "App",
   components: {
-    MainPage,
     HeaderNav,
-    RouterLink,
     RouterView
   }
 });
@@ -18,10 +15,9 @@ export default defineComponent({
 <template>
   <div class="bg-dark min-vh-100 d-flex flex-column">
     <HeaderNav />
-    <MainPage />
+    <RouterView />
     <footer class="container-fluid mt-auto" />
   </div>
-  <RouterView />
 </template>
 
 <style lang="scss" scoped>
