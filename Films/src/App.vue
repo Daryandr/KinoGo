@@ -12,7 +12,6 @@ export default defineComponent({
   },
   async beforeCreate() {
     await useFilmsStore().fetchFilms();
-    useFilmsStore().trainRecommender();
   },
 });
 </script>

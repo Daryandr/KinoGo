@@ -1,6 +1,5 @@
 export type Film = {
   _id: string,
-  type: string,
   name: string,
   description: string,
   year: number,
@@ -10,13 +9,11 @@ export type Film = {
   poster: string,
   rating:{
     kp: number,
-    imdb: number,
-    filmCritics: number,
+    imdb: number
   },
   votes:{
     kp: number,
-    imdb: number,
-    filmCritics: number,
+    imdb: number
   },
   watchability:[
     {

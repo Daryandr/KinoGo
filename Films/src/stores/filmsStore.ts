@@ -4,7 +4,8 @@ import axios from "axios";
 
 export const useFilmsStore = defineStore("films", {
   state: () => ({
-    films: [] as Film[]
+    films: [] as Film[],
+    recs: [] as Film[]
   }),
   getters: {
     getFilm: (state) => (filmId: string) => {
@@ -21,7 +22,7 @@ export const useFilmsStore = defineStore("films", {
     },
     filmsByTime: state => {
       return state.films.sort((a, b) => a.movieLength - b.movieLength);
-    }
+    },
   },
   actions: {
     async fetchFilms() {
@@ -31,6 +32,14 @@ export const useFilmsStore = defineStore("films", {
       } catch (error) {
         console.error(error);
       }
-    }
+    },
+    async fetchRecs(id:string) {
+      try {
+        const response = await axios.get(`http://localhost:8081/recs/${id}`);
+        this.recs = response.data;
+      } catch (error) {
+        console.error(error);
+      }
+    },
   }
 });

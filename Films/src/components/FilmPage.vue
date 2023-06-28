@@ -35,8 +35,11 @@ export default defineComponent({
       return useFilmsStore().getFilm(this.filmId);
     },
     recommendedFilms() {
-      return useFilmsStore().getSimilarFilms(this.filmId);
+      return useFilmsStore().recs;
     }
+  },
+  async beforeCreate() {
+    await useFilmsStore().fetchRecs(this.filmId);
   },
   methods: {
     getRatingColor(rating) {
@@ -157,7 +160,9 @@ export default defineComponent({
           </div>
         </div>
       </div>
-      <div class="row mt-5">
+      <div
+        v-if="recommendedFilms.length!=0"
+        class="row mt-5">
         <h3 class="mb-0">Похожие фильмы</h3>
         <vue3-horizontal-list
           :items="recommendedFilms"
