@@ -21,7 +21,7 @@ export default defineComponent({
 <template>
   <div class="dropdown m-2">
     <button
-      class="btn btn-primary btn-lg dropdown-toggle px-3 py-2"
+      class="btn btn-primary dropdown-toggle px-3 py-2"
       type="button"
       id="dropdownBtn"
       data-bs-toggle="dropdown"
@@ -38,7 +38,7 @@ export default defineComponent({
         :key="option"
       >
         <button
-          class="dropdown-item btn btn-primary btn-lg text-white px-3 py-2"
+          class="dropdown-item btn btn-primary text-white px-3 py-2"
           type="button"
           @click="setSort(option)"
         >

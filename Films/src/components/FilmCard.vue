@@ -15,8 +15,8 @@ export default defineComponent({
   methods: {
     getRatingColor(rating) {
       if (rating > 7) return "bg-success";
-      else if (rating > 4) return "text-warning";
-      else return "text-danger";
+      else if (rating > 4) return "bg-warning";
+      else return "bg-danger";
     },
     isFilmLiked(id) {
       return true;///////////
@@ -26,7 +26,7 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink class="card text-white m-3 bg-dark" :to="'film/'+film._id">
+  <RouterLink class="card text-white m-3 bg-dark" :to="'/film/'+film._id">
     <img
       class="card-img-top"
       :src="film.poster"
@@ -34,11 +34,11 @@ export default defineComponent({
     >
     <div class="card-img-overlay d-flex flex-column justify-content-end">
       <div class="d-flex align-items-start flex-wrap">
-        <h4 class="card-title mr">
+        <h4 class="card-title me-2">
           {{ film.name }}
         </h4>
         <i
-          class="bi bi-star-fill mr"
+          class="bi bi-star-fill me-2"
           v-if="isFilmLiked(film._id)"
         />
         <h5
@@ -71,10 +71,6 @@ export default defineComponent({
 .bi-star-fill {
   font-size: 2.6vmin;
   color: $secondary;
-}
-
-.mr {
-  margin-right: 0.5rem;
 }
 
 .card-title {

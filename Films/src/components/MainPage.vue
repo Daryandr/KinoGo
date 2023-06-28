@@ -30,9 +30,6 @@ export default defineComponent({
       return this.sortedFilms.filter((film) => film.name.toLowerCase().includes(this.searchInput.toLowerCase()));
     }
   },
-  async beforeCreate() {
-    await useFilmsStore().fetchFilms();
-  },
   methods: {
     setSearch(input) {
       this.searchInput = input;
@@ -53,7 +50,6 @@ export default defineComponent({
       class="d-flex justify-content-center"
     >
       <div
-        style="width: 3rem; height: 3rem;"
         class="spinner-border text-white m-5"
         role="status"
       >
@@ -84,5 +80,8 @@ export default defineComponent({
 </template>
 
 <style lang="scss" scoped>
-
+.spinner-border{
+  width: 3rem;
+  height: 3rem;
+}
 </style>

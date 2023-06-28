@@ -2,13 +2,18 @@
 import { RouterView } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import { defineComponent } from "vue";
+import { useFilmsStore } from "@/stores/filmsStore";
 
 export default defineComponent({
   name: "App",
   components: {
     HeaderNav,
     RouterView
-  }
+  },
+  async beforeCreate() {
+    await useFilmsStore().fetchFilms();
+    useFilmsStore().trainRecommender();
+  },
 });
 </script>
 

@@ -28,15 +28,15 @@ export default defineComponent({
 
 <style scoped lang="scss">
 .form-control {
-  width: 40vw;
-  height: 3.5rem;
+  width: 35rem;
+  height: 3rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  font-size: 1.4em;
+  font-size: 1.2rem;
 }
 
 .btn {
-  width: 3.5rem;
+  width: 3rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
 }

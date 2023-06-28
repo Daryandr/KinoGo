@@ -30,7 +30,7 @@ export default defineComponent({
 
 .navbar-brand {
   font-family: 'Candal', sans-serif;
-  font-size: 2em;
+  font-size: 1.8rem;
 }
 
 .navbar {
