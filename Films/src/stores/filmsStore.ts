@@ -12,20 +12,8 @@ export const useFilmsStore = defineStore("films", {
     getFilm: (state) => (filmId: string) => {
       return state.films.find((film) => film._id === filmId);
     },
-    filmsByName: state => {
-      return state.films.sort((a, b) => a.name.localeCompare(b.name));
-    },
-    filmsByRating: state => {
-      return state.films.sort((a, b) => b.rating.kp - a.rating.kp);
-    },
-    filmsByYear: state => {
-      return state.films.sort((a, b) => b.year - a.year);
-    },
-    filmsByTime: state => {
-      return state.films.sort((a, b) => a.movieLength - b.movieLength);
-    },
     getFavorites: state => {
-      return state.films.filter(film => state.favorites.some(id => id === film._id));
+      return state.films.filter(film => state.favorites.indexOf(film._id) != -1);
     }
   },
   actions: {

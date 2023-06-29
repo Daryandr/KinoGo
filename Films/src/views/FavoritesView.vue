@@ -5,6 +5,6 @@ import { useFilmsStore } from "@/stores/filmsStore";
 
 <template>
   <main>
-    <MainPage :films="useFilmsStore().films" />
+    <MainPage :films="useFilmsStore().getFavorites" />
   </main>
 </template>

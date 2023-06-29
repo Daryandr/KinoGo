@@ -4,7 +4,12 @@ import { RouterLink } from "vue-router";
 
 export default defineComponent({
   name: "HeaderNav",
-  components: { RouterLink }
+  components: { RouterLink },
+  data() {
+    return {
+      isMarkHover: false
+    };
+  }
 });
 </script>
 
@@ -15,6 +20,16 @@ export default defineComponent({
         <RouterLink class="navbar-brand" to="/">
           <i class="bi bi-film" />
           KinoGo
+        </RouterLink>
+        <RouterLink to="/favorites">
+          <i
+            @mouseenter="isMarkHover = true"
+            v-if="!isMarkHover"
+            class="bi bi-bookmark text-white" />
+          <i
+            @mouseleave="isMarkHover = false"
+            v-if="isMarkHover"
+            class="bi bi-bookmark-fill text-white" />
         </RouterLink>
       </div>
     </nav>
@@ -36,5 +51,9 @@ export default defineComponent({
 .navbar {
   z-index: 1;
   background: linear-gradient(0deg, transparent 0%, $primary 100%);
+}
+
+.bi {
+  font-size: 1.6rem;
 }
 </style>

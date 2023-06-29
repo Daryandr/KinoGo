@@ -74,7 +74,7 @@ export default defineComponent({
       </div>
     </div>
     <div v-else>
-      <div class="row">
+      <div class="row text">
         <div class="col-sm-12 col-md-4">
           <img
             :src="film.poster"
@@ -84,7 +84,7 @@ export default defineComponent({
         </div>
         <div class="col-sm-12 col-md-8 ps-4">
           <div class="d-flex justify-content-between mb-3">
-            <h1 class="ml-5">{{ film.name }}</h1>
+            <h2>{{ film.name }}</h2>
             <i
               class="bi bi-star-fill"
               v-if="isFilmLiked()"
@@ -96,7 +96,7 @@ export default defineComponent({
               @click="addToFavorites"
             />
           </div>
-          <div class="d-flex text">
+          <div class="d-flex">
             <p class="me-4">{{ film.alternativeName }}</p>
             <p class="me-4">
               <i class="bi bi-calendar me-1" />
@@ -107,9 +107,9 @@ export default defineComponent({
               {{ film.movieLength }} мин.
             </p>
           </div>
-          <p class="text">{{ film.description }}</p>
-          <h4>Рейтинг</h4>
-          <div class="text d-flex">
+          <p>{{ film.description }}</p>
+          <h5>Рейтинг</h5>
+          <div class="d-flex mt-3">
             <div class="d-flex flex-column">
               <div
                 class="rating"
@@ -140,8 +140,8 @@ export default defineComponent({
             </div>
           </div>
           <div v-if="film.watchability">
-            <h4>Где смотреть</h4>
-            <div class="text d-flex flex-wrap">
+            <h5>Где смотреть</h5>
+            <div class="d-flex flex-wrap">
               <a
                 v-for="watch in film.watchability"
                 :key="watch.name"
@@ -184,7 +184,7 @@ export default defineComponent({
 }
 
 .bi-star-fill, .bi-star {
-  font-size: 2.4rem;
+  font-size: 2.2rem;
   color: $secondary;
   cursor: pointer;
 
@@ -194,7 +194,7 @@ export default defineComponent({
 }
 
 .text {
-  font-size: 1.4rem;
+  font-size: 1.25rem;
 }
 
 .v-text {
