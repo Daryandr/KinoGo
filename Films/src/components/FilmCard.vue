@@ -2,6 +2,7 @@
 import { defineComponent, PropType } from "vue";
 import type { Film } from "@/types/main";
 import { RouterLink } from "vue-router";
+import { useFilmsStore } from "@/stores/filmsStore";
 
 export default defineComponent({
   name: "FilmCard",
@@ -19,7 +20,7 @@ export default defineComponent({
       else return "bg-danger";
     },
     isFilmLiked(id) {
-      return true;///////////
+      return useFilmsStore().isFilmLiked(id);
     }
   }
 });

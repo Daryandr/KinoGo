@@ -48,13 +48,13 @@ export default defineComponent({
       else return "text-danger";
     },
     addToFavorites() {
-      console.log(1);
+      useFilmsStore().addToFavorites(this.filmId);
     },
     deleteFromFavorites() {
-      console.log(2);
+      useFilmsStore().delFromFavorites(this.filmId);
     },
-    isFilmLiked(id) {
-      return false;///////////
+    isFilmLiked() {
+      return useFilmsStore().isFilmLiked(this.filmId);
     }
   }
 });
@@ -87,7 +87,7 @@ export default defineComponent({
             <h1 class="ml-5">{{ film.name }}</h1>
             <i
               class="bi bi-star-fill"
-              v-if="isFilmLiked(film._id)"
+              v-if="isFilmLiked()"
               @click="deleteFromFavorites"
             />
             <i

@@ -5,7 +5,8 @@ import axios from "axios";
 export const useFilmsStore = defineStore("films", {
   state: () => ({
     films: [] as Film[],
-    recs: [] as Film[]
+    recs: [] as Film[],
+    favorites: [] as string[]
   }),
   getters: {
     getFilm: (state) => (filmId: string) => {
@@ -23,6 +24,9 @@ export const useFilmsStore = defineStore("films", {
     filmsByTime: state => {
       return state.films.sort((a, b) => a.movieLength - b.movieLength);
     },
+    getFavorites: state => {
+      return state.films.filter(film => state.favorites.some(id => id === film._id));
+    }
   },
   actions: {
     async fetchFilms() {
@@ -32,8 +36,9 @@ export const useFilmsStore = defineStore("films", {
       } catch (error) {
         console.error(error);
       }
+      this.fetchFavorites();
     },
-    async fetchRecs(id:string) {
+    async fetchRecs(id: string) {
       try {
         const response = await axios.get(`http://localhost:8081/recs/${id}`);
         this.recs = response.data;
@@ -41,5 +46,25 @@ export const useFilmsStore = defineStore("films", {
         console.error(error);
       }
     },
+    fetchFavorites() {
+      const favs = localStorage.getItem("favorites");
+      if (favs != null) {
+        this.favorites = JSON.parse(favs);
+      }
+    },
+    addToFavorites(id: string) {
+      this.favorites.push(id);
+      localStorage.setItem("favorites", JSON.stringify(this.favorites));
+    },
+    delFromFavorites(id: string) {
+      const index = this.favorites.indexOf(id);
+      if (index > -1) {
+        this.favorites.splice(index, 1);
+        localStorage.setItem("favorites", JSON.stringify(this.favorites));
+      }
+    },
+    isFilmLiked(id: string): boolean {
+      return this.favorites.indexOf(id) > -1;
+    }
   }
 });
