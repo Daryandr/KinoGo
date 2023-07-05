@@ -39,6 +39,7 @@ export default defineComponent({
       >
         <button
           class="dropdown-item btn btn-primary text-white px-3 py-2"
+          :class="sortValue == option ? 'active' : ''"
           type="button"
           @click="setSort(option)"
         >
@@ -48,3 +49,9 @@ export default defineComponent({
     </ul>
   </div>
 </template>
+
+<style lang="scss" scoped>
+.active {
+  background: rgba(0, 0, 0, 0.1);
+}
+</style>

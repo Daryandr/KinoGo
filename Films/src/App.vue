@@ -27,7 +27,6 @@ export default defineComponent({
 <style lang="scss" scoped>
 .container-fluid {
   height: 10vh;
-  z-index: 1;
   background: linear-gradient(0deg, $primary 0%, transparent 100%);
 }
 </style>

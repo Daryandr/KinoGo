@@ -17,7 +17,7 @@ export default defineComponent({
   <header>
     <nav class="navbar navbar-expand-lg navbar-dark px-5">
       <div class="container-fluid">
-        <RouterLink class="navbar-brand" to="/">
+        <RouterLink class="navbar-brand fs-2" to="/">
           <i class="bi bi-film" />
           KinoGo
         </RouterLink>
@@ -25,11 +25,11 @@ export default defineComponent({
           <i
             @mouseenter="isMarkHover = true"
             v-if="!isMarkHover"
-            class="bi bi-bookmark text-white" />
+            class="bi bi-bookmark text-white fs-3" />
           <i
             @mouseleave="isMarkHover = false"
             v-if="isMarkHover"
-            class="bi bi-bookmark-fill text-white" />
+            class="bi bi-bookmark-fill text-white fs-3" />
         </RouterLink>
       </div>
     </nav>
@@ -45,15 +45,9 @@ export default defineComponent({
 
 .navbar-brand {
   font-family: 'Candal', sans-serif;
-  font-size: 1.8rem;
 }
 
 .navbar {
-  z-index: 1;
   background: linear-gradient(0deg, transparent 0%, $primary 100%);
-}
-
-.bi {
-  font-size: 1.6rem;
 }
 </style>

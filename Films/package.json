@@ -19,7 +19,8 @@
     "pinia": "^2.0.36",
     "vue": "^3.3.2",
     "vue-router": "^4.2.0",
-    "vue3-horizontal-list": "^0.0.3"
+    "vue3-horizontal-list": "^0.0.3",
+    "vuejs-paginate-next": "^1.0.2"
   },
   "devDependencies": {
     "@rushstack/eslint-patch": "^1.2.0",

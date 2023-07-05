@@ -16,6 +16,9 @@ export default defineComponent({
   data() {
     return {
       listOptions: {
+        item: {
+          class: "d-flex align-items-stretch",
+        },
         responsive: [
           { end: 576, size: 2 },
           { start: 576, end: 768, size: 2 },
@@ -40,6 +43,14 @@ export default defineComponent({
   },
   async beforeCreate() {
     await useFilmsStore().fetchRecs(this.filmId);
+  },
+  created() {
+    this.$watch(
+      () => this.$route.params,
+      async (toParams, previousParams) => {
+        await useFilmsStore().fetchRecs(toParams.id);
+      }
+    )
   },
   methods: {
     getRatingColor(rating) {
@@ -74,7 +85,7 @@ export default defineComponent({
       </div>
     </div>
     <div v-else>
-      <div class="row text">
+      <div class="row fs-5">
         <div class="col-sm-12 col-md-4">
           <img
             :src="film.poster"
@@ -86,12 +97,12 @@ export default defineComponent({
           <div class="d-flex justify-content-between mb-3">
             <h2>{{ film.name }}</h2>
             <i
-              class="bi bi-star-fill"
+              class="bi bi-star-fill fs-2 text-secondary"
               v-if="isFilmLiked()"
               @click="deleteFromFavorites"
             />
             <i
-              class="bi bi-star"
+              class="bi bi-star fs-2 text-secondary"
               v-else
               @click="addToFavorites"
             />
@@ -112,31 +123,31 @@ export default defineComponent({
           <div class="d-flex mt-3">
             <div class="d-flex flex-column">
               <div
-                class="rating"
+                class="rating bg-primary rounded p-1 me-5"
                 :class="getRatingColor(film.rating.kp)"
               >
                 <img
                   src="../assets/pics/kinopoisk-icon.svg"
-                  class="rating-img"
+                  class="rating-img me-1"
                   alt="Failed to load"
                 >
                 <b>{{ film.rating.kp.toFixed(2) }}</b>
               </div>
-              <p class="v-text">{{ film.votes.kp }} оценок</p>
+              <p class="fs-6">{{ film.votes.kp }} оценок</p>
             </div>
             <div class="d-flex flex-column">
               <div
-                class="rating"
+                class="rating bg-primary rounded p-1 me-5"
                 :class="getRatingColor(film.rating.kp)"
               >
                 <img
                   src="../assets/pics/imdb-logo.svg"
-                  class="rating-img"
+                  class="rating-img me-1"
                   alt="Failed to load"
                 >
                 <b>{{ film.rating.imdb.toFixed(2) }}</b>
               </div>
-              <p class="v-text">{{ film.votes.imdb }} оценок</p>
+              <p class="fs-6">{{ film.votes.imdb }} оценок</p>
             </div>
           </div>
           <div v-if="film.watchability">
@@ -147,7 +158,7 @@ export default defineComponent({
                 :key="watch.name"
                 :href="watch.url"
                 target="_blank"
-                class="link mt-3 me-5"
+                class="link text-decoration-none text-white mt-3 me-5"
               >
                 <img
                   :src="watch.logo"
@@ -184,8 +195,6 @@ export default defineComponent({
 }
 
 .bi-star-fill, .bi-star {
-  font-size: 2.2rem;
-  color: $secondary;
   cursor: pointer;
 
   &:hover {
@@ -193,34 +202,13 @@ export default defineComponent({
   }
 }
 
-.text {
-  font-size: 1.25rem;
-}
-
-.v-text {
-  font-size: 1rem;
-}
-
 .rating-img {
   width: 3rem;
   height: 3rem;
-  margin-right: 0.5rem;
 }
 
-.rating {
-  padding: 0.3rem;
-  margin-right: 3rem;
-  border-radius: 0.5rem;
-  background-color: $primary;
-}
-
-.link {
-  text-decoration: none;
-  color: white;
-
-  &:hover {
-    opacity: 0.9;
-  }
+.link:hover {
+  opacity: 0.9;
 }
 
 </style>

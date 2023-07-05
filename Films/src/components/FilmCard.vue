@@ -27,29 +27,29 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink class="card text-white m-3 bg-dark" :to="'/film/'+film._id">
+  <RouterLink class="card text-white m-3 bg-dark" :to="'/film/' + film._id">
     <img
-      class="card-img-top"
+      class="card-img-top rounded h-100 object-fit-cover"
       :src="film.poster"
       alt="Failed to load"
     >
     <div class="card-img-overlay d-flex flex-column justify-content-end">
       <div class="d-flex align-items-start flex-wrap">
-        <h4 class="card-title me-2">
+        <h4 class="card-title me-2 text-break">
           {{ film.name }}
         </h4>
         <i
-          class="bi bi-star-fill me-2"
+          class="bi bi-star-fill text-secondary me-2"
           v-if="isFilmLiked(film._id)"
         />
         <h5
-          class="rating"
+          class="rating rounded p-1"
           :class="getRatingColor(film.rating.kp)"
         >
           {{ film.rating.kp.toFixed(1) }}
         </h5>
       </div>
-      <div class="card-text">
+      <div class="card-text text-break">
         {{ film.shortDescription }}
       </div>
     </div>
@@ -71,20 +71,13 @@ export default defineComponent({
 
 .bi-star-fill {
   font-size: 2.6vmin;
-  color: $secondary;
 }
 
 .card-title {
   font-size: 3vmin;
 }
 
-.card-img-top {
-  border-radius: 0.5rem;
-}
-
 .rating {
-  padding: 0.2rem;
-  border-radius: 0.5rem;
   font-size: 2.6vmin;
 }
 </style>

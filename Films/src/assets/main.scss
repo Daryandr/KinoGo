@@ -1,27 +1,17 @@
 @import 'variables';
+$pagination-bg: transparent;
+$pagination-border-radius: 0;
+$pagination-focus-box-shadow: 0;
+$pagination-border-color: transparent;
+$pagination-disabled-bg: transparent;
+$pagination-disabled-border-color: transparent;
+$pagination-focus-bg: transparent;
+$pagination-hover-bg: transparent;
+$pagination-hover-border-color: white;
+$pagination-active-bg: $primary;
+$pagination-active-border-color: transparent;
+$pagination-padding-x: 0.8rem;
 @import 'bootstrap/dist/css/bootstrap.min.css';
 @import 'bootstrap';
 @import 'bootstrap-icons/font/bootstrap-icons.css';
 
-/*#app {*/
-/*  margin: 0 auto;*/
-/*  color: var(--color-text);*/
-/*  background: var(--color-background);*/
-/*  font-family: Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu,*/
-/*  Cantarell, 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;*/
-/*  font-size: 15px;*/
-/*}*/
-
-
-/*@media (min-width: 1024px) {*/
-/*  body {*/
-/*    display: flex;*/
-/*    place-items: center;*/
-/*  }*/
-
-/*  #app {*/
-/*    display: grid;*/
-/*    grid-template-columns: 1fr 1fr;*/
-/*    padding: 0 2rem;*/
-/*  }*/
-/*}*/

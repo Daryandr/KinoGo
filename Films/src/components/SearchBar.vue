@@ -12,7 +12,7 @@ export default defineComponent({
     @submit.prevent=""
   >
     <input
-      class="form-control"
+      class="form-control fs-6"
       @input="this.$emit('search',$event.target.value)"
       type="search"
       placeholder="Название фильма, сериала"
@@ -21,7 +21,7 @@ export default defineComponent({
       class="btn btn-primary"
       type="submit"
     >
-      <i class="bi bi-search" />
+      <i class="bi bi-search fs-5" />
     </button>
   </form>
 </template>
@@ -32,16 +32,11 @@ export default defineComponent({
   height: 3rem;
   border-top-right-radius: 0;
   border-bottom-right-radius: 0;
-  font-size: 1.2rem;
 }
 
 .btn {
   width: 3rem;
   border-top-left-radius: 0;
   border-bottom-left-radius: 0;
-}
-
-.bi-search {
-  font-size: 1.4em;
 }
 </style>
