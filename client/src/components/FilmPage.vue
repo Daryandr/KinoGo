@@ -51,7 +51,7 @@ export default defineComponent({
   created() {
     this.$watch(
       () => this.$route.params,
-      async (toParams, previousParams) => {
+      async (toParams) => {
         await useFilmsStore().fetchRecs(toParams.id);
       }
     );

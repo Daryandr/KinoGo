@@ -1,6 +1,7 @@
 import { defineStore } from "pinia";
 import type { Film } from "@/types/main";
 import axios from "axios";
+import config from "@/../config";
 
 export const useFilmsStore = defineStore("films", {
   state: () => ({
@@ -24,7 +25,7 @@ export const useFilmsStore = defineStore("films", {
   actions: {
     async fetchFilms() {
       try {
-        const response = await axios.get("http://localhost:8081/list");
+        const response = await axios.get(`${config.server.url}/list`);
         this.films = response.data;
       } catch (error) {
         console.error(error);
@@ -35,7 +36,7 @@ export const useFilmsStore = defineStore("films", {
     },
     async fetchRecs(id: string) {
       try {
-        const response = await axios.get(`http://localhost:8081/recs/${id}`);
+        const response = await axios.get(`${config.server.url}/recs/${id}`);
         this.recs = response.data;
       } catch (error) {
         console.error(error);
