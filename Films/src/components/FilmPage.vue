@@ -3,6 +3,7 @@ import { defineComponent } from "vue";
 import { useFilmsStore } from "@/stores/filmsStore";
 import FilmCard from "@/components/FilmCard.vue";
 import vue3HorizontalList from "vue3-horizontal-list";
+import { mapActions } from "pinia";
 
 export default defineComponent({
   name: "FilmPage",
@@ -17,7 +18,7 @@ export default defineComponent({
     return {
       listOptions: {
         item: {
-          class: "d-flex align-items-stretch",
+          class: "d-flex align-items-stretch"
         },
         responsive: [
           { end: 576, size: 2 },
@@ -27,9 +28,12 @@ export default defineComponent({
           { start: 1200, size: 4 },
           { start: 1400, size: 5 }],
         navigation: {
-          start: 0,
+          start: 992,
           color: "#2E3D54"
-        }
+        },
+        position: {
+          start: 1,
+        },
       }
     };
   },
@@ -50,7 +54,7 @@ export default defineComponent({
       async (toParams, previousParams) => {
         await useFilmsStore().fetchRecs(toParams.id);
       }
-    )
+    );
   },
   methods: {
     getRatingColor(rating) {
@@ -58,15 +62,17 @@ export default defineComponent({
       else if (rating > 4) return "text-warning";
       else return "text-danger";
     },
-    addToFavorites() {
-      useFilmsStore().addToFavorites(this.filmId);
-    },
-    deleteFromFavorites() {
-      useFilmsStore().delFromFavorites(this.filmId);
-    },
-    isFilmLiked() {
-      return useFilmsStore().isFilmLiked(this.filmId);
-    }
+    ...mapActions(useFilmsStore, {
+      isFilmFavorite: "isFilmFavorite",
+      addToFavorites: "addToFavorites",
+      deleteFromFavorites: "delFromFavorites",
+      addToLikes: "addToLikes",
+      deleteFromLikes: "delFromLikes",
+      isFilmLiked: "isFilmLiked",
+      addToDislikes: "addToDislikes",
+      deleteFromDislikes: "delFromDislikes",
+      isFilmDisliked: "isFilmDisliked"
+    })
   }
 });
 </script>
@@ -96,16 +102,40 @@ export default defineComponent({
         <div class="col-sm-12 col-md-8 ps-4">
           <div class="d-flex justify-content-between mb-3">
             <h2>{{ film.name }}</h2>
-            <i
-              class="bi bi-star-fill fs-2 text-secondary"
-              v-if="isFilmLiked()"
-              @click="deleteFromFavorites"
-            />
-            <i
-              class="bi bi-star fs-2 text-secondary"
-              v-else
-              @click="addToFavorites"
-            />
+            <div class="d-flex">
+              <i
+                class="bi bi-hand-thumbs-up-fill fs-2 text-success check"
+                v-if="isFilmLiked(this.filmId)"
+                @click="deleteFromLikes(this.filmId)"
+              />
+              <i
+                class="bi bi-hand-thumbs-up fs-2 text-success check"
+                v-else
+                @click="addToLikes(this.filmId)"
+              />
+              <div class="vr mx-2" />
+              <i
+                class="bi bi-hand-thumbs-down-fill fs-2 text-danger check me-5"
+                v-if="isFilmDisliked(this.filmId)"
+                @click="deleteFromDislikes(this.filmId)"
+              />
+              <i
+                class="bi bi-hand-thumbs-down fs-2 text-danger check me-5"
+                v-else
+                @click="addToDislikes(this.filmId)"
+              />
+              <i
+                class="bi bi-star-fill fs-2 text-secondary check"
+                v-if="isFilmFavorite(this.filmId)"
+                @click="deleteFromFavorites(this.filmId)"
+              />
+              <i
+                class="bi bi-star fs-2 text-secondary check"
+                v-else
+                @click="addToFavorites(this.filmId)"
+              />
+            </div>
+
           </div>
           <div class="d-flex">
             <p class="me-4">{{ film.alternativeName }}</p>
@@ -194,7 +224,7 @@ export default defineComponent({
   height: 3rem;
 }
 
-.bi-star-fill, .bi-star {
+.check {
   cursor: pointer;
 
   &:hover {

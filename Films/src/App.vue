@@ -12,7 +12,7 @@ export default defineComponent({
   },
   async beforeCreate() {
     await useFilmsStore().fetchFilms();
-  },
+  }
 });
 </script>
 

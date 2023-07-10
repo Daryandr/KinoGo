@@ -3,6 +3,7 @@ import { defineComponent, PropType } from "vue";
 import type { Film } from "@/types/main";
 import { RouterLink } from "vue-router";
 import { useFilmsStore } from "@/stores/filmsStore";
+import { mapActions } from "pinia";
 
 export default defineComponent({
   name: "FilmCard",
@@ -19,9 +20,9 @@ export default defineComponent({
       else if (rating > 4) return "bg-warning";
       else return "bg-danger";
     },
-    isFilmLiked(id) {
-      return useFilmsStore().isFilmLiked(id);
-    }
+    ...mapActions(useFilmsStore, {
+      isFilmFavorite: "isFilmFavorite"
+    })
   }
 });
 </script>
@@ -40,7 +41,7 @@ export default defineComponent({
         </h4>
         <i
           class="bi bi-star-fill text-secondary me-2"
-          v-if="isFilmLiked(film._id)"
+          v-if="isFilmFavorite(film._id)"
         />
         <h5
           class="rating rounded p-1"

@@ -1,7 +1,8 @@
-import HomeView from "@/views/HomeView.vue";
 import type { RouteRecordRaw } from "vue-router";
+import HomeView from "@/views/HomeView.vue";
 import FilmView from "@/views/FilmView.vue";
 import FavoritesView from "@/views/FavoritesView.vue";
+import MarksView from "@/views/MarksView.vue";
 
 export const routes: Array<RouteRecordRaw> = [
   {
@@ -20,4 +21,14 @@ export const routes: Array<RouteRecordRaw> = [
     name: "favorites",
     component: FavoritesView
   },
+  {
+    path: "/marks",
+    name: "marks",
+    component: MarksView,
+    props: (route) => ({
+      page: route.query.page,
+      search: route.query.search,
+      sort: route.query.sort
+    })
+  }
 ];
