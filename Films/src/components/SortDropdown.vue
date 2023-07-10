@@ -3,11 +3,22 @@ import { defineComponent } from "vue";
 
 export default defineComponent({
   name: "SortDropdown",
+  props: {
+    defValue: {
+      type: String,
+      default: "По названию"
+    }
+  },
   data() {
     return {
       sortValue: "По названию",
       sortOptions: ["По названию", "По рейтингу", "По году", "По хронометражу"]
     };
+  },
+  watch: {
+    defValue(value) {
+      this.sortValue = value;
+    }
   },
   methods: {
     setSort(option) {

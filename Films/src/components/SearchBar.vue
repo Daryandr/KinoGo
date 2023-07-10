@@ -2,18 +2,40 @@
 import { defineComponent } from "vue";
 
 export default defineComponent({
-  name: "SearchBar"
+  name: "SearchBar",
+  props: {
+    inputValue: {
+      type: String,
+      default: ""
+    }
+  },
+  data() {
+    return {
+      input: ""
+    };
+  },
+  watch: {
+    inputValue(value) {
+      this.input = value;
+    }
+  },
+  methods: {
+    setSearch() {
+      this.$emit("search", this.input);
+    }
+  }
 });
 </script>
 
 <template>
   <form
     class="d-flex justify-content-center m-5"
-    @submit.prevent=""
+    @submit.prevent="setSearch"
+    @keydown.enter.prevent="setSearch"
   >
     <input
       class="form-control fs-6"
-      @input="this.$emit('search',$event.target.value)"
+      v-model="input"
       type="search"
       placeholder="Название фильма, сериала"
     >

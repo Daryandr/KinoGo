@@ -8,7 +8,24 @@ import Paginate from "vuejs-paginate-next";
 
 export default defineComponent({
   name: "MainPage",
-  props: ["films"],
+  props: {
+    films: {
+      type: Array,
+      required: true
+    },
+    pageNum: {
+      type: String,
+      default: "1"
+    },
+    sortOption: {
+      type: String,
+      default: "По названию"
+    },
+    searchString: {
+      type: String,
+      default: ""
+    }
+  },
   components: {
     SearchBar,
     SortDropdown,
@@ -37,32 +54,64 @@ export default defineComponent({
       else return films.sort((a, b) => a.name.localeCompare(b.name));
     },
     filteredFilms() {
-      return this.sortedFilms.filter((film) => film.name.toLowerCase().includes(this.searchInput.toLowerCase()));
+      return this.sortedFilms.filter((film) => film.name.toLowerCase().includes(this.searchInput.toString().toLowerCase()));
     },
     pageCount() {
       return Math.ceil(this.filteredFilms.length / this.filmsPerPage);
     }
   },
   mounted() {
-    this.changePage(1);
+    this.setSort(this.sortOption);
+    this.setSearch(this.searchString);
+    this.changePage(parseInt(this.pageNum));
   },
   watch: {
-    filteredFilms() {
-      this.changePage(1);
+    filteredFilms(){
+      this.changePage(this.page);
+    },
+    pageNum(value) {
+      this.changePage(parseInt(value));
+    },
+    sortOption(value) {
+      this.setSort(value);
+    },
+    searchString(value) {
+      this.setSearch(value);
     }
   },
   methods: {
     setSearch(input) {
       this.searchInput = input;
+      this.updateQueryParams();
+      this.changePage(1);
     },
     setSort(value) {
       this.sortValue = value;
+      this.updateQueryParams();
+      this.changePage(1);
     },
     changePage(pageNum) {
       this.page = pageNum;
       const offset = (this.filmsPerPage * pageNum) - this.filmsPerPage;
       this.filmsOnPage = [...this.filteredFilms].splice(offset, this.filmsPerPage);
+      this.updateQueryParams();
+    },
+    onPaginateClick(p) {
+      this.changePage(p);
       window.scrollTo(0, 0);
+    },
+    updateQueryParams() {
+      let query = "";
+      if (this.sortValue != "По названию") {
+        query += `sort=${this.sortValue}&`;
+      }
+      if (this.searchInput != "") {
+        query += `search=${this.searchInput}&`;
+      }
+      if (this.page != 1) {
+        query += `page=${this.page}`;
+      }
+      this.$router.push(`${this.$route.path}?${query}`);
     }
   }
 });
@@ -70,8 +119,8 @@ export default defineComponent({
 
 <template>
   <div class="container">
-    <SearchBar @search="setSearch" />
-    <SortDropdown @sort="setSort" />
+    <SearchBar :input-value="searchInput" @search="setSearch" />
+    <SortDropdown :def-value="sortValue" @sort="setSort" />
     <div
       v-if="storeFilms.length == 0"
       class="d-flex justify-content-center"
@@ -113,7 +162,7 @@ export default defineComponent({
       :page-count="pageCount"
       :page-range="3"
       :margin-pages="2"
-      :click-handler="changePage"
+      :click-handler="onPaginateClick"
       :prev-text="''"
       :next-text="''"
       :prev-link-class="'page-link rounded text-white me-2 bi bi-chevron-left'"

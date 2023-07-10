@@ -8,7 +8,12 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/",
     name: "home",
-    component: HomeView
+    component: HomeView,
+    props: (route) => ({
+      page: route.query.page,
+      search: route.query.search,
+      sort: route.query.sort
+    })
   },
   {
     path: "/film/:id",
@@ -19,7 +24,12 @@ export const routes: Array<RouteRecordRaw> = [
   {
     path: "/favorites",
     name: "favorites",
-    component: FavoritesView
+    component: FavoritesView,
+    props: (route) => ({
+      page: route.query.page,
+      search: route.query.search,
+      sort: route.query.sort
+    })
   },
   {
     path: "/marks",
