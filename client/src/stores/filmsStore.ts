@@ -1,7 +1,20 @@
 import { defineStore } from "pinia";
 import type { Film } from "@/types/main";
 import axios from "axios";
-import config from "@/../config";
+
+axios.interceptors.request.use(function(config) {
+  return config;
+}, function(error) {
+  console.error(error);
+  return Promise.reject(error);
+});
+
+axios.interceptors.response.use(function(response) {
+  return response;
+}, function(error) {
+  console.error(error);
+  return Promise.reject(error);
+});
 
 export const useFilmsStore = defineStore("films", {
   state: () => ({
@@ -12,14 +25,14 @@ export const useFilmsStore = defineStore("films", {
     dislikes: [] as string[]
   }),
   getters: {
-    getFilm: (state) => (filmId: string) => {
+    getFilmById: (state) => (filmId: string) => {
       return state.films.find((film) => film._id === filmId);
     },
     getFavorites: state => {
       return state.films.filter(film => state.favorites.indexOf(film._id) != -1);
     },
     getMarks: state => {
-      return state.films.filter(film => state.likes.indexOf(film._id) != -1 || state.dislikes.indexOf(film._id) != -1);
+      return state.films.filter(film => state.likes.includes(film._id) || state.dislikes.includes(film._id));
     }
   },
   actions: {
@@ -34,7 +47,7 @@ export const useFilmsStore = defineStore("films", {
       const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/recs/${id}`);
       this.recs = response.data;
     },
-    fetchFavorites() {
+    loadFavorites() {
       const favs = localStorage.getItem("favorites");
       if (favs != null) {
         this.favorites = JSON.parse(favs);
@@ -54,7 +67,7 @@ export const useFilmsStore = defineStore("films", {
     isFilmFavorite(id: string): boolean {
       return this.favorites.indexOf(id) > -1;
     },
-    fetchLikes() {
+    loadLikes() {
       const likes = localStorage.getItem("likes");
       if (likes != null) {
         this.likes = JSON.parse(likes);
@@ -77,7 +90,7 @@ export const useFilmsStore = defineStore("films", {
     isFilmLiked(id: string): boolean {
       return this.likes.indexOf(id) > -1;
     },
-    fetchDislikes() {
+    loadDislikes() {
       const dislikes = localStorage.getItem("dislikes");
       if (dislikes != null) {
         this.dislikes = JSON.parse(dislikes);

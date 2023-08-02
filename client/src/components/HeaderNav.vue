@@ -21,8 +21,8 @@ export default defineComponent({
         </RouterLink>
         <div class="nav-item dropdown">
           <i
-            class="nav-link bi bi-person-circle text-white fs-2"
             id="navbarDropdown"
+            class="nav-link bi bi-person-circle text-white fs-2"
             data-bs-toggle="dropdown"
           />
           <ul class="dropdown-menu dropdown-menu-end dropdown-menu-dark bg-primary p-0">

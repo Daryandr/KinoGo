@@ -28,7 +28,10 @@ export default defineComponent({
 </script>
 
 <template>
-  <RouterLink class="card text-white m-3 bg-dark" :to="'/film/' + film._id">
+  <RouterLink
+    class="card text-white m-3 bg-dark"
+    :to="'/film/' + film._id"
+  >
     <img
       class="card-img-top rounded h-100 object-fit-cover"
       :src="film.poster"
@@ -40,8 +43,8 @@ export default defineComponent({
           {{ film.name }}
         </h4>
         <i
-          class="bi bi-star-fill text-secondary me-2"
           v-if="isFilmFavorite(film._id)"
+          class="bi bi-star-fill text-secondary me-2"
         />
         <h5
           class="rating rounded p-1"

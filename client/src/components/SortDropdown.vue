@@ -4,7 +4,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "SortDropdown",
   props: {
-    defValue: {
+    modelValue: {
       type: String,
       default: "По названию"
     }
@@ -16,14 +16,14 @@ export default defineComponent({
     };
   },
   watch: {
-    defValue(value) {
+    modelValue(value) {
       this.sortValue = value;
     }
   },
   methods: {
-    setSort(option) {
+    updateModel(option) {
       this.sortValue = option;
-      this.$emit("sort", option);
+      this.$emit("update:modelValue", option);
     }
   }
 });
@@ -32,9 +32,9 @@ export default defineComponent({
 <template>
   <div class="dropdown m-2">
     <button
+      id="dropdownBtn"
       class="btn btn-primary dropdown-toggle px-3 py-2"
       type="button"
-      id="dropdownBtn"
       data-bs-toggle="dropdown"
       aria-expanded="false"
     >
@@ -50,9 +50,9 @@ export default defineComponent({
       >
         <button
           class="dropdown-item btn btn-primary text-white px-3 py-2"
-          :class="sortValue == option ? 'active' : ''"
+          :class="sortValue === option ? 'active' : ''"
           type="button"
-          @click="setSort(option)"
+          @click="updateModel(option)"
         >
           {{ option }}
         </button>

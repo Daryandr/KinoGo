@@ -4,7 +4,7 @@ import { defineComponent } from "vue";
 export default defineComponent({
   name: "SearchBar",
   props: {
-    inputValue: {
+    modelValue: {
       type: String,
       default: ""
     }
@@ -15,13 +15,13 @@ export default defineComponent({
     };
   },
   watch: {
-    inputValue(value) {
+    modelValue(value) {
       this.input = value;
     }
   },
   methods: {
-    setSearch() {
-      this.$emit("search", this.input);
+    updateModel() {
+      this.$emit("update:modelValue", this.input);
     }
   }
 });
@@ -30,12 +30,12 @@ export default defineComponent({
 <template>
   <form
     class="d-flex justify-content-center m-5"
-    @submit.prevent="setSearch"
-    @keydown.enter.prevent="setSearch"
+    @submit.prevent="updateModel"
+    @keydown.enter.prevent="updateModel"
   >
     <input
-      class="form-control fs-6"
       v-model="input"
+      class="form-control fs-6"
       type="search"
       placeholder="Название фильма, сериала"
     >

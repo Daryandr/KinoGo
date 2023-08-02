@@ -5,9 +5,16 @@ import SortDropdown from "@/components/SortDropdown.vue";
 import FilmCard from "@/components/FilmCard.vue";
 import { useFilmsStore } from "@/stores/filmsStore";
 import Paginate from "vuejs-paginate-next";
+import { mapState } from "pinia";
 
 export default defineComponent({
   name: "MainPage",
+  components: {
+    SearchBar,
+    SortDropdown,
+    FilmCard,
+    Paginate
+  },
   props: {
     films: {
       type: Array,
@@ -26,12 +33,6 @@ export default defineComponent({
       default: ""
     }
   },
-  components: {
-    SearchBar,
-    SortDropdown,
-    FilmCard,
-    Paginate
-  },
   data() {
     return {
       sortValue: "По названию",
@@ -42,16 +43,22 @@ export default defineComponent({
     };
   },
   computed: {
-    storeFilms() {
-      return useFilmsStore().films;
-    },
+    ...mapState(useFilmsStore, {
+      storeFilms: "films"
+    }),
     sortedFilms() {
       const val = this.sortValue;
       const films = [...this.films];
-      if (val == "По рейтингу") return films.sort((a, b) => b.rating.kp - a.rating.kp);
-      else if (val == "По году") return films.sort((a, b) => b.year - a.year);
-      else if (val == "По хронометражу") return films.sort((a, b) => a.movieLength - b.movieLength);
-      else return films.sort((a, b) => a.name.localeCompare(b.name));
+      switch (val) {
+        case "По рейтингу":
+          return films.sort((a, b) => b.rating.kp - a.rating.kp);
+        case "По году":
+          return films.sort((a, b) => b.year - a.year);
+        case "По хронометражу":
+          return films.sort((a, b) => a.movieLength - b.movieLength);
+        default:
+          return films.sort((a, b) => a.name.localeCompare(b.name));
+      }
     },
     filteredFilms() {
       return this.sortedFilms.filter((film) => film.name.toLowerCase().includes(this.searchInput.toString().toLowerCase()));
@@ -60,13 +67,8 @@ export default defineComponent({
       return Math.ceil(this.filteredFilms.length / this.filmsPerPage);
     }
   },
-  mounted() {
-    this.setSort(this.sortOption);
-    this.setSearch(this.searchString);
-    this.changePage(parseInt(this.pageNum));
-  },
   watch: {
-    filteredFilms(){
+    filteredFilms() {
       this.changePage(this.page);
     },
     pageNum(value) {
@@ -79,15 +81,18 @@ export default defineComponent({
       this.setSearch(value);
     }
   },
+  mounted() {
+    this.setSort(this.sortOption);
+    this.setSearch(this.searchString);
+    this.changePage(parseInt(this.pageNum));
+  },
   methods: {
     setSearch(input) {
       this.searchInput = input;
-      this.updateQueryParams();
       this.changePage(1);
     },
     setSort(value) {
       this.sortValue = value;
-      this.updateQueryParams();
       this.changePage(1);
     },
     changePage(pageNum) {
@@ -119,10 +124,14 @@ export default defineComponent({
 
 <template>
   <div class="container">
-    <SearchBar :input-value="searchInput" @search="setSearch" />
-    <SortDropdown :def-value="sortValue" @sort="setSort" />
+    <SearchBar
+      v-model="searchInput"
+    />
+    <SortDropdown
+      v-model="sortValue"
+    />
     <div
-      v-if="storeFilms.length == 0"
+      v-if="storeFilms.length === 0"
       class="d-flex justify-content-center"
     >
       <div
@@ -139,7 +148,7 @@ export default defineComponent({
       Фильмы не найдены
     </h4>
     <h4
-      v-else-if="filteredFilms.length == 0"
+      v-else-if="filteredFilms.length === 0"
       class="text-white text-center"
     >
       По вашему запросу ничего не найдено
@@ -149,16 +158,16 @@ export default defineComponent({
       class="row row-cols-2 row-cols-lg-3 row-cols-xl-4"
     >
       <div
-        class="col p-0 d-flex align-items-stretch"
         v-for="film in filmsOnPage"
         :key="film._id"
+        class="col p-0 d-flex align-items-stretch"
       >
         <FilmCard :film="film" />
       </div>
     </div>
     <Paginate
-      v-model="page"
       v-if="pageCount > 1"
+      v-model="page"
       :page-count="pageCount"
       :page-range="3"
       :margin-pages="2"
@@ -170,8 +179,7 @@ export default defineComponent({
       :container-class="'pagination d-flex justify-content-center my-3'"
       :page-class="'page-item'"
       :page-link-class="'page-link me-2 rounded text-white'"
-    >
-    </Paginate>
+    />
   </div>
 </template>
 

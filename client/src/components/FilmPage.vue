@@ -39,7 +39,7 @@ export default defineComponent({
   },
   computed: {
     film() {
-      return useFilmsStore().getFilm(this.filmId);
+      return useFilmsStore().getFilmById(this.filmId);
     },
     recommendedFilms() {
       return useFilmsStore().recs;
@@ -104,41 +104,43 @@ export default defineComponent({
             <h2>{{ film.name }}</h2>
             <div class="d-flex">
               <i
+                v-if="isFilmLiked(filmId)"
                 class="bi bi-hand-thumbs-up-fill fs-2 text-success check"
-                v-if="isFilmLiked(this.filmId)"
-                @click="deleteFromLikes(this.filmId)"
+                @click="deleteFromLikes(filmId)"
               />
               <i
-                class="bi bi-hand-thumbs-up fs-2 text-success check"
                 v-else
-                @click="addToLikes(this.filmId)"
+                class="bi bi-hand-thumbs-up fs-2 text-success check"
+                @click="addToLikes(filmId)"
               />
               <div class="vr mx-2" />
               <i
+                v-if="isFilmDisliked(filmId)"
                 class="bi bi-hand-thumbs-down-fill fs-2 text-danger check me-5"
-                v-if="isFilmDisliked(this.filmId)"
-                @click="deleteFromDislikes(this.filmId)"
+                @click="deleteFromDislikes(filmId)"
               />
               <i
+                v-else
                 class="bi bi-hand-thumbs-down fs-2 text-danger check me-5"
-                v-else
-                @click="addToDislikes(this.filmId)"
+                @click="addToDislikes(filmId)"
               />
               <i
+                v-if="isFilmFavorite(filmId)"
                 class="bi bi-star-fill fs-2 text-secondary check"
-                v-if="isFilmFavorite(this.filmId)"
-                @click="deleteFromFavorites(this.filmId)"
+                @click="deleteFromFavorites(filmId)"
               />
               <i
-                class="bi bi-star fs-2 text-secondary check"
                 v-else
-                @click="addToFavorites(this.filmId)"
+                class="bi bi-star fs-2 text-secondary check"
+                @click="addToFavorites(filmId)"
               />
             </div>
 
           </div>
           <div class="d-flex">
-            <p class="me-4">{{ film.alternativeName }}</p>
+            <p class="me-4">
+              {{ film.alternativeName }}
+            </p>
             <p class="me-4">
               <i class="bi bi-calendar me-1" />
               {{ film.year }} г.
@@ -163,7 +165,9 @@ export default defineComponent({
                 >
                 <b>{{ film.rating.kp.toFixed(2) }}</b>
               </div>
-              <p class="fs-6">{{ film.votes.kp }} оценок</p>
+              <p class="fs-6">
+                {{ film.votes.kp }} оценок
+              </p>
             </div>
             <div class="d-flex flex-column">
               <div
@@ -177,7 +181,9 @@ export default defineComponent({
                 >
                 <b>{{ film.rating.imdb.toFixed(2) }}</b>
               </div>
-              <p class="fs-6">{{ film.votes.imdb }} оценок</p>
+              <p class="fs-6">
+                {{ film.votes.imdb }} оценок
+              </p>
             </div>
           </div>
           <div v-if="film.watchability">

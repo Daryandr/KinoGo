@@ -3,14 +3,19 @@ import MainPage from "@/components/Films.vue";
 import { useFilmsStore } from "@/stores/filmsStore";
 
 defineProps<{
-  page: string | undefined,
-  sort: string | undefined,
-  search: string | undefined,
+  page?: string,
+  sort?: string,
+  search?: string,
 }>();
 </script>
 
 <template>
   <main>
-    <MainPage :films="useFilmsStore().getMarks" :page-num="page" :sort-option="sort" :search-string="search" />
+    <MainPage
+      :films="useFilmsStore().getMarks"
+      :page-num="page"
+      :sort-option="sort"
+      :search-string="search"
+    />
   </main>
 </template>

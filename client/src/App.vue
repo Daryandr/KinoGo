@@ -3,6 +3,7 @@ import { RouterView } from "vue-router";
 import HeaderNav from "@/components/HeaderNav.vue";
 import { defineComponent } from "vue";
 import { useFilmsStore } from "@/stores/filmsStore";
+import { mapActions } from "pinia";
 
 export default defineComponent({
   name: "App",
@@ -10,8 +11,13 @@ export default defineComponent({
     HeaderNav,
     RouterView
   },
-  async beforeCreate() {
-    await useFilmsStore().fetchFilms();
+  async created() {
+    await this.fetchFilms();
+  },
+  methods: {
+    ...mapActions(useFilmsStore, {
+      fetchFilms: "fetchFilms"
+    })
   }
 });
 </script>
