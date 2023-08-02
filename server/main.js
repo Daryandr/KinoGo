@@ -1,8 +1,8 @@
 const express = require("express");
 const app = express();
+require('dotenv').config();
 const { MongoClient, ServerApiVersion } = require("mongodb");
-const config = require("./config.js");
-const client = new MongoClient(config.mongouri, {
+const client = new MongoClient(process.env.MONGO_URL, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   serverApi: ServerApiVersion.v1
@@ -49,7 +49,7 @@ const proj = {
     await client.connect();
     app.locals.collection = client.db("Filmsdb").collection("films");
     await trainRecommender();
-    await app.listen(config.port, () => {
+    await app.listen(process.env.PORT, () => {
       console.log("Server is ready.");
     });
   } catch (err) {

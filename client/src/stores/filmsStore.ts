@@ -24,23 +24,15 @@ export const useFilmsStore = defineStore("films", {
   },
   actions: {
     async fetchFilms() {
-      try {
-        const response = await axios.get(`${config.server.url}/list`);
-        this.films = response.data;
-      } catch (error) {
-        console.error(error);
-      }
-      this.fetchFavorites();
-      this.fetchDislikes();
-      this.fetchLikes();
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/list`);
+      this.films = response.data;
+      this.loadFavorites();
+      this.loadDislikes();
+      this.loadLikes();
     },
     async fetchRecs(id: string) {
-      try {
-        const response = await axios.get(`${config.server.url}/recs/${id}`);
-        this.recs = response.data;
-      } catch (error) {
-        console.error(error);
-      }
+      const response = await axios.get(`${import.meta.env.VITE_SERVER_URL}/recs/${id}`);
+      this.recs = response.data;
     },
     fetchFavorites() {
       const favs = localStorage.getItem("favorites");
