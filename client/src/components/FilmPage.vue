@@ -2,40 +2,17 @@
 import { defineComponent } from "vue";
 import { useFilmsStore } from "@/stores/filmsStore";
 import FilmCard from "@/components/FilmCard.vue";
-import vue3HorizontalList from "vue3-horizontal-list";
 import { mapActions } from "pinia";
+import VueHorizontal from "vue-horizontal";
 
 export default defineComponent({
   name: "FilmPage",
-  components: { FilmCard, vue3HorizontalList },
+  components: { FilmCard, VueHorizontal },
   props: {
     filmId: {
       type: String,
       required: true
     }
-  },
-  data() {
-    return {
-      listOptions: {
-        item: {
-          class: "d-flex align-items-stretch"
-        },
-        responsive: [
-          { end: 576, size: 2 },
-          { start: 576, end: 768, size: 2 },
-          { start: 768, end: 992, size: 3 },
-          { start: 992, end: 1200, size: 3 },
-          { start: 1200, size: 4 },
-          { start: 1400, size: 5 }],
-        navigation: {
-          start: 992,
-          color: "#2E3D54"
-        },
-        position: {
-          start: 1,
-        },
-      }
-    };
   },
   computed: {
     film() {
@@ -53,6 +30,7 @@ export default defineComponent({
       () => this.$route.params,
       async (toParams) => {
         await useFilmsStore().fetchRecs(toParams.id);
+        this.$refs.horizontal.scrollToIndex(0);
       }
     );
   },
@@ -135,7 +113,6 @@ export default defineComponent({
                 @click="addToFavorites(filmId)"
               />
             </div>
-
           </div>
           <div class="d-flex">
             <p class="me-4">
@@ -209,16 +186,24 @@ export default defineComponent({
       </div>
       <div
         v-if="recommendedFilms.length!=0"
-        class="row mt-5">
-        <h3 class="mb-0">Похожие фильмы</h3>
-        <vue3-horizontal-list
-          :items="recommendedFilms"
-          :options="listOptions"
-        >
-          <template v-slot:default="{ item }">
+        class="row mt-5"
+      >
+        <h3 class="mb-0">
+          Похожие фильмы
+        </h3>
+        <vue-horizontal ref="horizontal">
+          <div v-for="item in recommendedFilms" :key="item._id" class="d-flex align-items-stretch horizontal-item">
             <FilmCard :film="item" />
+          </div>
+
+          <template v-slot:btn-prev>
+            <i class="bi bi-chevron-left text-white fs-2 bg-primary rounded px-1 chevron" />
           </template>
-        </vue3-horizontal-list>
+
+          <template v-slot:btn-next>
+            <i class="bi bi-chevron-right text-white fs-2 bg-primary rounded px-1 chevron" />
+          </template>
+        </vue-horizontal>
       </div>
     </div>
   </div>
@@ -247,4 +232,25 @@ export default defineComponent({
   opacity: 0.9;
 }
 
+.chevron:hover {
+  opacity: 0.9;
+}
+
+@media (min-width: 0px) {
+  .horizontal-item {
+    width: calc(100% / 2);
+  }
+}
+
+@media (min-width: 768px) {
+  .horizontal-item {
+    width: calc(100% / 3);
+  }
+}
+
+@media (min-width: 1280px) {
+  .horizontal-item {
+    width: calc(100% / 4);
+  }
+}
 </style>
